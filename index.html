@@ -3,33 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق ويب البوت</title>
-    <style>
-        /* CSS لضبط الشكل */
-        body {
-            /* 1. جعل الخلفية سوداء بالكامل */
-            background-color: #000000; 
-            /* 2. جعل النص في المنتصف (أفقياً وعمودياً) */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* 3. لضمان أن الخلفية السوداء تغطي الشاشة بالكامل */
-            height: 100vh; 
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
+    <title>متجر الألعاب - Web App</title>
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-        #message {
-            /* 4. لون النص أبيض ليظهر على الخلفية السوداء */
+    <style>
+        body {
+            background-color: #000000; 
             color: white; 
-            font-size: 5em; /* حجم كبير للنص */
-            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .product-card {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        h2 {
+            color: #4CAF50; /* لون أخضر للمنتج */
+        }
+        button {
+            background-color: #007ACC;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-    <div id="message">
-        نلو
+
+    <div class="product-card">
+        <h2>لعبة Grand Theft Auto VI</h2>
+        <p>الخدمة: تفعيل حساب - نسخة ديلوكس.</p>
+        <p><strong>السعر: 75.00$</strong></p>
+        
+        <button onclick="sendOrder('GTA6_DELUXE_75')">
+            إرسال طلب الشراء إلى البوت
+        </button>
     </div>
+
+    <script>
+        // 2. دالة الجافاسكريبت لإرسال البيانات إلى البوت
+        function sendOrder(productID) {
+            // التحقق من أن SDK تليجرام جاهز للعمل
+            if (window.Telegram && window.Telegram.WebApp) {
+                
+                // 3. استخدام sendData لإرسال معرف المنتج إلى كود Python الخاص بالبوت
+                window.Telegram.WebApp.sendData(productID);
+                
+                // 4. إغلاق نافذة الويب آب بعد إرسال الطلب (اختياري)
+                window.Telegram.WebApp.close(); 
+            } else {
+                alert('عذراً، تطبيق الويب غير جاهز أو لم يتم فتحه عبر تليجرام.');
+            }
+        }
+    </script>
 </body>
 </html>
